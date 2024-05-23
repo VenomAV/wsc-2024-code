@@ -1,8 +1,8 @@
 import { Animal, Diet, Plant } from "../types"
-import { readAllAnimal, readPlantsByCountry, sendDiet } from "./api"
+import { readAllAnimals, readPlantsByCountry, sendDiet } from "./api"
 
 export const basicProcess = async () => {
-    const allAnimal = await readAllAnimal()
+    const allAnimal = await readAllAnimals()
     const animalByCountry = groupAnimalByCountry(allAnimal)
 
     for (const country of Object.keys(animalByCountry)) {
