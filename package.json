@@ -10,7 +10,8 @@
     "typecheck": "tsc --noemit",
     "typecheck:w": "tsc --noemit --watch",
     "lint": "eslint src",
-    "test:w": "vitest"
+    "test:w": "vitest",
+    "infra": "docker-compose up"
   },
   "dependencies": {
     "effect": "^3.2.4",
