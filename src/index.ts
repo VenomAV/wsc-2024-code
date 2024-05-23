@@ -24,6 +24,15 @@ const effect = Command.make("effect", {}, ({}) =>
     }),
 )
 
+const concurrency = Command.make("concurrency", {}, ({}) =>
+    Effect.gen(function* (_) {
+        const [duration] = yield* _(
+            effectProcess.pipe(Effect.timed, Effect.withConcurrency(50), Effect.provide(MongoDataAccess)),
+        )
+        yield* _(Console.info(`Duration: ${Duration.format(duration)}`))
+    }),
+)
+
 const generate = Command.make("generate", {}, ({}) =>
     Effect.gen(function* (_) {
         const [duration] = yield* _(Effect.promise(generateFakeData).pipe(Effect.timed))
@@ -32,7 +41,7 @@ const generate = Command.make("generate", {}, ({}) =>
 )
 
 const performance = Command.make("performance", {}, ({}) => Console.info(`Hello world`)).pipe(
-    Command.withSubcommands([basic, generate, effect]),
+    Command.withSubcommands([basic, generate, effect, concurrency]),
 )
 
 const cli = Command.run(performance, {
