@@ -1,10 +1,10 @@
 export type Animal = {
-    id: string
+    animalId: string
     country: string
     //other fields
 }
 export type Plant = {
-    id: string
+    plantId: string
     country: string
     //other fields
 }

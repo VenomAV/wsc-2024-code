@@ -4,6 +4,7 @@ import * as Duration from "effect/Duration"
 import { Command } from "@effect/cli"
 import { NodeContext, NodeRuntime } from "@effect/platform-node"
 import { basicProcess } from "./basic/basic"
+import { generateFakeData } from "./fake-data/generate"
 
 const basic = Command.make("basic", {}, ({}) =>
     Effect.gen(function* (_) {
@@ -12,8 +13,15 @@ const basic = Command.make("basic", {}, ({}) =>
     }),
 )
 
+const generate = Command.make("generate", {}, ({}) =>
+    Effect.gen(function* (_) {
+        const [duration] = yield* _(Effect.promise(generateFakeData).pipe(Effect.timed))
+        yield* _(Console.info(`Duration: ${Duration.format(duration)}`))
+    }),
+)
+
 const performance = Command.make("performance", {}, ({}) => Console.info(`Hello world`)).pipe(
-    Command.withSubcommands([basic]),
+    Command.withSubcommands([basic, generate]),
 )
 
 const cli = Command.run(performance, {

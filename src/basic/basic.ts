@@ -24,7 +24,7 @@ const selectPlantsByAnimal = (plants: readonly Plant[], animal: Animal): readonl
 }
 const createDietFor = (stuff: Animal, otherStuff: readonly Plant[]): Diet | undefined => {
     const doTheyEat = Math.random() > 0.5
-    return !doTheyEat ? undefined : { animalId: stuff.id, plantIds: otherStuff.map((x) => x.id) }
+    return !doTheyEat ? undefined : { animalId: stuff.animalId, plantIds: otherStuff.map((x) => x.plantId) }
 }
 
 const groupAnimalByCountry = (allStuff: readonly Animal[]): Record<string, Animal[]> =>

@@ -21,7 +21,8 @@
     "@effect/printer-ansi": "^0.33.20",
     "@effect/schema": "^0.67.12",
     "@effect/typeclass": "^0.24.20",
-    "mongodb": "^6.6.2"
+    "mongodb": "^6.6.2",
+    "@faker-js/faker": "^8.4.1"
   },
   "devDependencies": {
     "@effect/vitest": "^0.5.4",
