@@ -20,7 +20,8 @@
     "@effect/platform-node": "^0.50.0",
     "@effect/printer-ansi": "^0.33.20",
     "@effect/schema": "^0.67.12",
-    "@effect/typeclass": "^0.24.20"
+    "@effect/typeclass": "^0.24.20",
+    "mongodb": "^6.6.2"
   },
   "devDependencies": {
     "@effect/vitest": "^0.5.4",

@@ -1,15 +1,19 @@
 import * as Effect from "effect/Effect"
 import * as Console from "effect/Console"
-import { Command, Options, Args } from "@effect/cli"
+import * as Duration from "effect/Duration"
+import { Command } from "@effect/cli"
 import { NodeContext, NodeRuntime } from "@effect/platform-node"
+import { basicProcess } from "./basic/basic"
 
-const performance = Command.make(
-    "performance",
-    { },
-    ({  }) =>
-        Console.info(
-            `Hello world`,
-        ),
+const basic = Command.make("basic", {}, ({}) =>
+    Effect.gen(function* (_) {
+        const [duration] = yield* _(Effect.promise(basicProcess).pipe(Effect.timed))
+        yield* _(Console.info(`Duration: ${Duration.format(duration)}`))
+    }),
+)
+
+const performance = Command.make("performance", {}, ({}) => Console.info(`Hello world`)).pipe(
+    Command.withSubcommands([basic]),
 )
 
 const cli = Command.run(performance, {
