@@ -1,18 +1,10 @@
-import * as Effect from "effect/Effect"
 import { Animal, Diet, Plant } from "../types"
-import { DataAccess } from "./data-access"
+import * as Effect from "effect/Effect"
+import { Dependencies } from "./dependencies"
 
-export const effectProcess = Effect.gen(function* (_) {
-    const { readAllAnimals } = yield* _(DataAccess)
-
-    const animals = yield* _(readAllAnimals)
-
-    yield* _(Effect.forEach(animals, processSingleAnimal, { concurrency: "inherit" }))
-})
-
-const processSingleAnimal = (animal: Animal) =>
+export const processSingleAnimal = (animal: Animal) =>
     Effect.gen(function* (_) {
-        const { readPlantsByCountry, sendDiet } = yield* _(DataAccess)
+        const { readPlantsByCountry, sendDiet } = yield* _(Dependencies)
         const plants = yield* _(readPlantsByCountry(animal.country))
         const selectedPlants = selectPlantsByAnimal(plants, animal)
         const diet = createDietFor(animal, selectedPlants)
