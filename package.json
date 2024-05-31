@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "go": "tsx src/index.ts",
+    "sample": "tsx src/sample.ts",
     "build": "yarn clean && tsc",
     "clean": "rimraf .build .coverage",
     "typecheck": "tsc --noemit",
