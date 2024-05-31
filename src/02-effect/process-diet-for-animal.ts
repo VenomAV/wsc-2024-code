@@ -2,7 +2,7 @@ import { Animal, Diet, Plant } from "../types"
 import * as Effect from "effect/Effect"
 import { Dependencies } from "./dependencies"
 
-export const processSingleAnimal = (animal: Animal) =>
+export const processDietForAnimal = (animal: Animal) =>
     Effect.gen(function* () {
         const { readPlantsByCountry, sendDiet } = yield* Dependencies
         const plants = yield* readPlantsByCountry(animal.country)
