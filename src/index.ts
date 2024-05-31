@@ -13,55 +13,57 @@ import { concurrentProcess } from "./03-concurrency/concurrent-process"
 import { batchedProcess } from "./05-batched/batched-process"
 
 const basic = Command.make("basic", {}, ({}) =>
-    Effect.gen(function* (_) {
-        const [duration] = yield* _(Effect.promise(basicProcess).pipe(Effect.timed))
-        yield* _(Console.info(`Duration: ${Duration.format(duration)}`))
+    Effect.gen(function* () {
+        const [duration] = yield* Effect.promise(basicProcess).pipe(Effect.timed)
+        yield* Console.info(`Duration: ${Duration.format(duration)}`)
     }),
 )
 
 const effect = Command.make("effect", {}, ({}) =>
-    Effect.gen(function* (_) {
-        const [duration] = yield* _(effectProcess.pipe(Effect.timed, Effect.provide(MongoDependencies)))
-        yield* _(Console.info(`Duration: ${Duration.format(duration)}`))
+    Effect.gen(function* () {
+        const [duration] = yield* effectProcess.pipe(Effect.timed, Effect.provide(MongoDependencies))
+        yield* Console.info(`Duration: ${Duration.format(duration)}`)
     }),
 )
 
 const concurrency = Command.make("concurrency", {}, ({}) =>
-    Effect.gen(function* (_) {
-        const [duration] = yield* _(
-            concurrentProcess.pipe(Effect.timed, Effect.withConcurrency(10), Effect.provide(MongoDependencies)),
+    Effect.gen(function* () {
+        const [duration] = yield* concurrentProcess.pipe(
+            Effect.timed,
+            Effect.withConcurrency(10),
+            Effect.provide(MongoDependencies),
         )
-        yield* _(Console.info(`Duration: ${Duration.format(duration)}`))
+        yield* Console.info(`Duration: ${Duration.format(duration)}`)
     }),
 )
 
 const cached = Command.make("cached", {}, ({}) =>
-    Effect.gen(function* (_) {
-        const [duration] = yield* _(
-            concurrentProcess.pipe(Effect.timed, Effect.withConcurrency(10), Effect.provide(CachedMongoDependencies)),
+    Effect.gen(function* () {
+        const [duration] = yield* concurrentProcess.pipe(
+            Effect.timed,
+            Effect.withConcurrency(10),
+            Effect.provide(CachedMongoDependencies),
         )
-        yield* _(Console.info(`Duration: ${Duration.format(duration)}`))
+        yield* Console.info(`Duration: ${Duration.format(duration)}`)
     }),
 )
 
 const batched = Command.make("batched", {}, ({}) =>
-    Effect.gen(function* (_) {
-        const [duration] = yield* _(
-            batchedProcess.pipe(
-                Effect.timed,
-                Effect.withConcurrency(10),
-                Effect.withRequestBatching(true),
-                Effect.provide(BatchedCachedMongoDependencies),
-            ),
+    Effect.gen(function* () {
+        const [duration] = yield* batchedProcess.pipe(
+            Effect.timed,
+            Effect.withConcurrency(10),
+            Effect.withRequestBatching(true),
+            Effect.provide(BatchedCachedMongoDependencies),
         )
-        yield* _(Console.info(`Duration: ${Duration.format(duration)}`))
+        yield* Console.info(`Duration: ${Duration.format(duration)}`)
     }),
 )
 
 const generate = Command.make("generate", {}, ({}) =>
-    Effect.gen(function* (_) {
-        const [duration] = yield* _(Effect.promise(generateFakeData).pipe(Effect.timed))
-        yield* _(Console.info(`Duration: ${Duration.format(duration)}`))
+    Effect.gen(function* () {
+        const [duration] = yield* Effect.promise(generateFakeData).pipe(Effect.timed)
+        yield* Console.info(`Duration: ${Duration.format(duration)}`)
     }),
 )
 

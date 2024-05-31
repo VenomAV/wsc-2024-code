@@ -17,8 +17,8 @@ export const ReadPlantsByCountryResolver = RequestResolver.fromEffect(({ country
 )
 
 export const SendDietBatchResolver = RequestResolver.makeBatched((requests: readonly SendDiet[]) =>
-    Effect.gen(function* (_) {
-        yield* _(Effect.promise(() => db.collection<Diet>("diets").insertMany(requests.map((r) => r.diet))))
-        yield* _(Effect.forEach(requests, Request.completeEffect(Effect.void)))
+    Effect.gen(function* () {
+        yield* Effect.promise(() => db.collection<Diet>("diets").insertMany(requests.map((r) => r.diet)))
+        yield* Effect.forEach(requests, Request.completeEffect(Effect.void))
     }),
 ).pipe(RequestResolver.batchN(1000))

@@ -3,13 +3,13 @@ import * as Effect from "effect/Effect"
 import { Dependencies } from "./dependencies"
 
 export const processSingleAnimal = (animal: Animal) =>
-    Effect.gen(function* (_) {
-        const { readPlantsByCountry, sendDiet } = yield* _(Dependencies)
-        const plants = yield* _(readPlantsByCountry(animal.country))
+    Effect.gen(function* () {
+        const { readPlantsByCountry, sendDiet } = yield* Dependencies
+        const plants = yield* readPlantsByCountry(animal.country)
         const selectedPlants = selectPlantsByAnimal(plants, animal)
         const diet = createDietFor(animal, selectedPlants)
 
-        if (diet) yield* _(sendDiet(diet))
+        if (diet) yield* sendDiet(diet)
     })
 
 const selectPlantsByAnimal = (plants: readonly Plant[], animal: Animal): readonly Plant[] => {
