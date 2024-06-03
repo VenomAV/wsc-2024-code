@@ -6,5 +6,5 @@ export const concurrentProcess = Effect.gen(function* () {
     const { readAllAnimals } = yield* Dependencies
     const animals = yield* readAllAnimals
 
-    yield* Effect.forEach(animals, processDietForAnimal, { concurrency: "inherit" })
+    yield* Effect.forEach(animals, processDietForAnimal, { concurrency: 10 })
 })

@@ -28,22 +28,14 @@ const effect = Command.make("effect", {}, ({}) =>
 
 const concurrency = Command.make("concurrency", {}, ({}) =>
     Effect.gen(function* () {
-        const [duration] = yield* concurrentProcess.pipe(
-            Effect.timed,
-            Effect.withConcurrency(10),
-            Effect.provide(MongoDependencies),
-        )
+        const [duration] = yield* concurrentProcess.pipe(Effect.timed, Effect.provide(MongoDependencies))
         yield* Console.info(`Duration: ${Duration.format(duration)}`)
     }),
 )
 
 const cached = Command.make("cached", {}, ({}) =>
     Effect.gen(function* () {
-        const [duration] = yield* concurrentProcess.pipe(
-            Effect.timed,
-            Effect.withConcurrency(10),
-            Effect.provide(CachedMongoDependencies),
-        )
+        const [duration] = yield* concurrentProcess.pipe(Effect.timed, Effect.provide(CachedMongoDependencies))
         yield* Console.info(`Duration: ${Duration.format(duration)}`)
     }),
 )
@@ -52,7 +44,6 @@ const batched = Command.make("batched", {}, ({}) =>
     Effect.gen(function* () {
         const [duration] = yield* batchedProcess.pipe(
             Effect.timed,
-            Effect.withConcurrency(10),
             Effect.withRequestBatching(true),
             Effect.provide(BatchedCachedMongoDependencies),
         )
