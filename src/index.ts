@@ -42,11 +42,7 @@ const cached = Command.make("cached", {}, ({}) =>
 
 const batched = Command.make("batched", {}, ({}) =>
     Effect.gen(function* () {
-        const [duration] = yield* batchedProcess.pipe(
-            Effect.timed,
-            Effect.withRequestBatching(true),
-            Effect.provide(BatchedCachedMongoDependencies),
-        )
+        const [duration] = yield* batchedProcess.pipe(Effect.timed, Effect.provide(BatchedCachedMongoDependencies))
         yield* Console.info(`Duration: ${Duration.format(duration)}`)
     }),
 )
